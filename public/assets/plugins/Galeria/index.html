@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+     <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
+     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+    
+     <!--- os arquivos para foram baixados -->
+
+        <h2> Ligthbox com jequery e Magnific Poupup</h2>
+        <hr>
+
+        <small>Prof , Ivan Lourenço Gomes</small>
+
+        <h3>Galeria de Fotos </h3>
+
+        <div class="galleria-001">
+
+           <a class="image-link" href="imagens/image-01.jpg"><img src="imagens/image-01.jpg" alt="foto-1"></a> 
+           <a class="image-link" href="imagens/image-02.jpg"><img src="imagens/image-02.jpg"  alt="foto-2"></a> 
+           <a class="image-link" href="imagens/image-03.jpg"><img src="imagens/image-03.jpg"  alt="foto-3" ></a> 
+           <a class="image-link" href="imagens/image-04.jpg"><img src="imagens/image-04.jpg" alt="foto-4"></a> 
+           <a class="image-link" href="imagens/image-05.jpg"><img src="imagens/image-05.jpg"  alt="foto-5"></a> 
+           <a class="image-link" href="imagens/image-07.jpg"><img src="imagens/image-06.jpg"  alt="foto-6" ></a> 
+            
+       </div>
+           			
+        <script src="js/jequery.js"></script>
+        <script src="js/jquery.magnific-popup.js"></script>
+       <!-- <script src="js\script.js"></script> -->
+		
+        <script>
+                    
+                    
+            alert('ola mundo')
+
+            $(document).ready(function() {
+
+            $('.galleria-001').magnificPopup({
+
+                delegate: 'a', // child item selector , by clicking on it Popup will open 
+                type: 'image',
+                gallery:{enabled:true}
+
+                    // other options
+            })
+
+            });
+
+        </script>
+
+ </div>
+
+</body>
+</html>
