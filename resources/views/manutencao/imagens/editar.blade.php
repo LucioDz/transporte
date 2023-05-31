@@ -9,7 +9,7 @@
         <!-- De modo a criar uma galeria com ligth box mas reponsiva ulitizou o pluguin magnific-popup -->
         <div class="row my-5">
             <h1 class="text-center">Editar Imagem Registrada na Manutenção {{ $ordemServico[0]->tipo_os }} Veiculo
-                {{ $ordemServico[0]->prefixo }} </h1>
+                {{ $ordemServico[0]->prefixo }}   </h1>
             <hr class="font-weight-bolder display-5" style="background-color:#000000">
 
             <div class="galleria-001">

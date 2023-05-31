@@ -81,7 +81,7 @@ class ManutencaoController extends Controller
                 // salvando o utlimom id inserido da tabela Manutencao preventiva
                 $ultimo_id_inserido_preventiva = DB::getPdo()->lastInsertId();
 
-                $veiculo = DB::table('veiculos')->where('id_veiculo', '=', $receber->veiculo)->first();
+                $veiculo = DB::table('veiculos')->where('id_veiculo','=',$receber->veiculo)->first();
 
                 if ($receber->hasFile('imagens')) {
                     $imagens = $receber->file('imagens');
@@ -90,7 +90,7 @@ class ManutencaoController extends Controller
                         if ($imagem->isValid()) {
 
                             //Armazenando a imagem no diretório "imagens/ordemServico/[prefixo do veículo]"
-                            $caminho = $imagem->store('imagens/manutencao/preventiva' . $veiculo->prefixo);
+                            $caminho = $imagem->store('imagens/manutencao/preventiva/'.$veiculo->prefixo);
                             // Salvando o caminho da imagem no banco de dados
                             $preventiva_imagens = new manutencao_preventiva_imagens();
                             $preventiva_imagens->caminho_imagem = $caminho;

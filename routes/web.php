@@ -163,8 +163,10 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/manutencao/preventiva/listar',[ManutencaoController::class,'listar']);
                 Route::get('/manutencao/preventiva/checklist/{id}',[ManutencaoController::class,'manutencaochecklist']);
                 Route::get('/manutencao/imprimir/{id}',[ManutencaoController::class,'relatorio']);
-                // OS quer dizer ordem de servico
                 //rotas para imagens
-                Route::get('/manutencao/preventiva/imagens/{id}', [ManuPrentivaImagemController::class, 'verImagens']);
+                Route::get('/manutencao/preventiva/imagens/{id}', [ManuPrentivaImagemController::class,'verImagens']);
+                Route::post('/manutencao/preventiva/imagens/adicionar/{id}', [ManuPrentivaImagemController::class,'AdcionarImagens']);
+                Route::get('/manutencao/preventiva/imagens/deletar/{id}',[ManuPrentivaImagemController::class,'DeletarImage']);
          });
+
 });
