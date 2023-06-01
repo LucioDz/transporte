@@ -166,7 +166,9 @@ Route::group(['middleware' => 'auth'], function () {
                 //rotas para imagens
                 Route::get('/manutencao/preventiva/imagens/{id}', [ManuPrentivaImagemController::class,'verImagens']);
                 Route::post('/manutencao/preventiva/imagens/adicionar/{id}', [ManuPrentivaImagemController::class,'AdcionarImagens']);
-                Route::get('/manutencao/preventiva/imagens/deletar/{id}',[ManuPrentivaImagemController::class,'DeletarImage']);
+                Route::get('/manutencao/preventiva/imagens/deletar/{id}',[ManuPrentivaImagemController::class,'DeletarImagem']);
+                Route::get('/manutencao/preventiva/imagens/editar/{id}', [ManuPrentivaImagemController::class, 'verImagem']);
+                Route::put('/manutencao/preventiva/imagens/actualizar/{id}', [ManuPrentivaImagemController::class, 'ActulizarImagem']);
          });
 
 });

@@ -8,8 +8,8 @@
         <!--  container galeria -->
         <!-- De modo a criar uma galeria com ligth box mas reponsiva ulitizou o pluguin magnific-popup -->
         <div class="row my-5">
-            <h1 class="text-center">Editar Imagem Registrada na Manutenção {{ $ordemServico[0]->tipo_os }} Veiculo
-                {{ $ordemServico[0]->prefixo }}   </h1>
+            <h1 class="text-center">Editar Imagem Registrada na Manutenção {{$manutencao_preventiva[0]->tipo_manutencao }} Veiculo
+                {{ $manutencao_preventiva[0]->prefixo }}   </h1>
             <hr class="font-weight-bolder display-5" style="background-color:#000000">
 
             <div class="galleria-001">
@@ -31,7 +31,7 @@
     <div class="row text-center">
 
         <div class="col-md-8 col-lg-8 mx-auto text-center">
-            <form method="POST" action="actualizar/{{ $imagem->id_imagem_os }}" enctype="multipart/form-data">
+            <form method="POST" action="/manutencao/preventiva/imagens/actualizar/{{$imagem->id_imagem_preventiva}}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="row">

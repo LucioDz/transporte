@@ -29,7 +29,7 @@
 
                                 @can('update',$manutencao_preventiva)
                                     <div class="m-auto btn btn-sm btn-primary"
-                                        onclick="location.href ='editar/{{ $img->id_imagem_preventiva }}'">editar</div>
+                                        onclick="location.href ='/manutencao/preventiva/imagens/editar/{{ $img->id_imagem_preventiva }}'">editar</div>
 
                                     <div class="m-auto btn btn-sm btn-danger"
                                         onclick="location.href ='/manutencao/preventiva/imagens/deletar/{{ $img->id_imagem_preventiva }}'">deletar</div>
