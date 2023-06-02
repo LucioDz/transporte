@@ -284,4 +284,74 @@ class ManutencaoController extends Controller
               abort('404');
         }
     }
+
+    public function editar($id)
+    {
+
+        $veiculos = DB::table('veiculos')->where('id_base', '=',  Auth::user()->funcionario->id_base)
+            ->orderBy('prefixo', 'ASC')->get();
+
+        $checklist = DB::table('checklists')->orderBy('nome_item', 'ASC')->get();
+
+        $servicos_requesitados = DB::table('manutencaopreventivaservicos')->where('id_preventiva', '=', $id)->get();
+
+        $Ordemservico = DB::table('ordem_servico as OS')
+            ->join('funcionarios as supervisor', 'supervisor.id_funcionario', '=', 'OS.id_funcionario')
+            ->join('veiculos as veiculos', 'veiculos.id_veiculo', '=', 'OS.id_veiculo')
+            ->join('bases as base', 'base.id_base', '=', 'supervisor.id_funcionario')
+            ->join('municipios', 'municipios.id_municipio', '=', 'base.id_municipio')
+            ->join('provincias', 'provincias.id_provincia', '=', 'municipios.id_provincia')
+            ->select(
+                'OS.*',
+                'base.*',
+                'veiculos.*',
+                'municipios.*',
+                'provincias.*',
+                'supervisor.id_funcionario as id_supervisor',
+                'supervisor.numero_mecanografico as supervisor_numero_mecanografico',
+                'supervisor.nome as supervisor_nome',
+                'supervisor.sobrenome as supervisor_sobrenome',
+                'OS.created_at as dataHora',
+            )->where('OS.id_os', '=', $id)->get();
+
+            $manutencao_preventiva = DB::table('manutencao_preventiva as mp')
+            ->join('funcionarios as supervisor', 'supervisor.id_funcionario', '=', 'mp.id_funcionario')
+            ->join('veiculos as veiculos', 'veiculos.id_veiculo', '=', 'mp.id_veiculo')
+            ->join('bases as base', 'base.id_base', '=', 'supervisor.id_funcionario')
+            ->select(
+                'mp.*',
+                'base.*',
+                'veiculos.*',
+                'supervisor.id_funcionario as id_supervisor',
+                'supervisor.numero_mecanografico as supervisor_numero_mecanografico',
+                'supervisor.nome as supervisor_nome',
+                'supervisor.sobrenome as supervisor_sobrenome',
+                'mp.created_at as dataHora',
+            )->where('mp.id_preventiva', '=',$id);
+          
+            $manutencao_preventiva_cheklist = DB::table('manutencao_preventiva')
+                ->join('manutencao_preventiva_cheklist', 'manutencao_preventiva_cheklist.id_preventiva', '=', 'manutencao_preventiva.id_preventiva')
+                ->join('checklists', 'checklists.id_checklist', '=', 'manutencao_preventiva_cheklist.fk_id_item_checklist')
+                ->select('manutencao_preventiva.*', 'manutencao_preventiva_cheklist.*', 'checklists.*')
+                ->where('manutencao_preventiva.id_preventiva', '=', $id)->get();
+
+          $checklist = DB::table('checklists')->orderBy('nome_item', 'ASC')->get();
+
+         $dados = [
+            'veiculos' => $veiculos,
+            'checklists' => $checklist,
+            'Ordemservico' => $Ordemservico,
+            'servicos_requesitados' => $servicos_requesitados,
+            'checklists' => $checklist,
+            'ordemservico_checklist' => $manutencao_preventiva_cheklist,
+            'descriao_checklist' => $manutencao_preventiva_cheklist[0]->descricao_os,
+            'success' => true,
+        ];
+
+        $dados['servicos'] = json_encode($servicos_requesitados);
+
+        return view('OrdemServico.editar', $dados);
+    }
+
+    
 }

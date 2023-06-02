@@ -18,7 +18,6 @@ class OrdemServicoController extends Controller
 {
     public function listar()
     {
-
         $bases = DB::table('bases')->get();
 
         $funcionarios = DB::table('funcionarios')->where('id_base', '=',  Auth::user()->funcionario->id_base)->get();
