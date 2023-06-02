@@ -148,7 +148,6 @@ class ManuPrentivaImagemController extends Controller
             }
       }
 
-      
       public function ActulizarImagem(request $receber)
       {
             $this->validate(
@@ -163,7 +162,16 @@ class ManuPrentivaImagemController extends Controller
 
             $camniho_do_arquivo = Storage::path($imagem->caminho_imagem);
 
-            $dados_portaria = Manutencaopreventiva::findOrFail($imagem->id_os);
+            $dados_portaria = Manutencaopreventiva::findOrFail($imagem->id_preventiva);
+
+            
+            $veiculo = DB::table('manutencao_preventiva as mp')
+            ->join('veiculos','veiculos.id_veiculo','=','mp.id_veiculo')
+            ->select('mp.*','veiculos.*')
+            ->where('mp.id_preventiva', '=', $imagem->id_preventiva)
+            ->orderBy('mp.id_preventiva', 'DESC')->get();
+
+          //  dd($veiculo);
 
             // verificando se o usuario tem permissao para editar dados da portaria 
             if (!Gate::allows('update', $dados_portaria)) {
@@ -172,22 +180,22 @@ class ManuPrentivaImagemController extends Controller
             } else {
 
                   if (file_exists($camniho_do_arquivo)) {
-                        // Apango primerio do servidor
-                        Storage::delete($imagem->caminho_imagem);
+                        // Apagando imagem do servidor
+                    Storage::delete($imagem->caminho_imagem);
 
-                     $veiculo = DB::table('manutencao_preventiva as mp')
-                        ->join('veiculos', 'veiculos.id_veiculo', '=', 'mp.id_veiculo')
+                      $veiculo = DB::table('manutencao_preventiva as mp')
+                        ->join('veiculos','veiculos.id_veiculo','=','mp.id_veiculo')
                         ->select('mp.*','veiculos.*')
                         ->where('mp.id_preventiva', '=', $imagem->id_preventiva)
                         ->orderBy('mp.id_preventiva', 'DESC')->get();
 
-                        $caimniho  = $receber->imagem->store('imagens/manutencao/preventiva/' . $veiculo->prefixo);
+                        $caminiho  = $receber->imagem->store('imagens/manutencao/preventiva/'.$veiculo[0]->prefixo);
 
                         $dados_actulizar = [
-                              'caminho_imagem' => $caimniho,
+                              'caminho_imagem' => $caminiho,
                         ];
                       
-                        $Actulizar_imagem = DB::table('manutencao_preventiva_imagens')->where('id_imagem_preventiva', $receber->id)->update($dados_actulizar);
+                   $Actulizar_imagem = DB::table('manutencao_preventiva_imagens')->where('id_imagem_preventiva', $receber->id)->update($dados_actulizar);
 
                         if ($Actulizar_imagem) {
                               return redirect('manutencao/preventiva/imagens/editar/'.$receber->id)->with('msg', 'Imagem actualizada com sucesso');
@@ -195,7 +203,8 @@ class ManuPrentivaImagemController extends Controller
                               return redirect('manutencao/preventiva/imagens/editar/'.$receber->id)->with('ERRO', 'Erro ao actulizar imgem na base de dados');
                         }
                   } else {
-                        return redirect('manutencao/preventiva/imagens/'.$imagem->id_preventiva)->with('ERRO', 'Erro ao apagar aqrquivo do Servidor tente novamente ');
+
+                        return redirect('manutencao/preventiva/imagens/'.$imagem->id_preventiva)->with('ERRO', 'Erro ao apagar arquivo do Servidor tente novamente ');
                   }
             }
       }
