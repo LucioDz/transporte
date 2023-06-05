@@ -168,7 +168,7 @@
                                     <a class="btn btn-danger" href="/manutencao/preventiva/imagens/{{ $manutencao_preventiva->id_preventiva }}">
                                         <i class="bi bi-card-image"></i>
                                     <td class="text-center" title="Editar">
-                                        <a class="btn btn-primary" href="/os/editar/{{ $manutencao_preventiva->id_preventiva }}">
+                                        <a class="btn btn-primary" href="/manutencao/preventiva/editar/{{ $manutencao_preventiva->id_preventiva }}">
                                             <i class="bi bi-pen-fill"></i>
                                     </td></a>
                                     

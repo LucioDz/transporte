@@ -23,7 +23,7 @@
                 </nav>
             </div><!-- End Page Title -->
 
-            <h1 class="text-center my-2">Manutenção Preventiva
+            <h1 class="text-center my-2">Editar Manutenção Preventiva
                   {{-- icone da Manutenção  --}}
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="30" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
                     <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708ZM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11Z"/>
@@ -69,9 +69,9 @@
                                             <select id="select_tipo_os" name="tipo_manutencao"
                                                 class="form-select  @error('tipo') is-invalid @enderror">
                                                 <option value="">...</option>
-                                                <option value="Mecânica" @if (old('select_tipo_os') == 'Mecânica', $Ordemservico[0]->tipo_manutencao) selected @endif>
+                                                <option value="Mecânica" @if (old('select_tipo_os',$manutencao_preventiva[0]->tipo_manutencao) == 'Mecânica') selected @endif>
                                                     Mecânica</option>
-                                                <option value="Eletrica" @if (old('select_tipo_os') == 'Eletrica',$Ordemservico[0]->tipo_manutencao) selected @endif>
+                                                <option value="Eletrica" @if (old('select_tipo_os',$manutencao_preventiva[0]->tipo_manutencao) == 'Eletrica') selected @endif>
                                                     Eletrica</option>
                                             </select>
                                             @error('tipo')
@@ -93,7 +93,7 @@
                                                 <option value="">....</option>
                                                 @foreach ($veiculos as $veiculo)
                                                     <option value=' {{ $veiculo->id_veiculo }}'
-                                                        @if (old('veiculo', $Ordemservico[0]->id_veiculo) == $veiculo->id_veiculo) selected @endif>
+                                                        @if (old('veiculo', $manutencao_preventiva[0]->id_veiculo) == $veiculo->id_veiculo) selected @endif>
                                                         {{ $veiculo->prefixo }}
 
                                                     </option>
@@ -144,13 +144,12 @@
                                                 </div>
                                             </label>
                                             <input type="date" class="form-control" id="previsao_da_manutencao" 
-                                             name="previsao_da_manutencao" value="manutencao_gerada"
-                                             @if (old('situacao_os', $Ordemservico[0]->situacao_os) == 'manutencao_gerada') selected @endif>
-                                            @error('data_manutencao')
-                                                <div class="invalid-feedback fs-5">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                             name="previsao_da_manutencao" value={{ old("situacao_os",$manutencao_preventiva[0]->previsao_da_manutencao) }}>
+                                                @error('data_manutencao')
+                                                    <div class="invalid-feedback fs-5">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                         </div>
                                         <!-- veiculos -->
 
@@ -163,18 +162,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-8 col-lg-8 mx-auto text-center">
-                    <div class="row mt-5">
-                        <input type="file" multiple="multiple" id="imagens" name="imagens[]"
-                            class="btn btn-primary @error('imagens') is-invalid @enderror">
-                    </div>
-                    @error('imagens')
-                        <div class="invalid-feedback fs-5">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
+               
                 <div class="col-md-8 col-lg-8 my-5 mx-auto">
                     <div class="card">
                         <div class="card-body">
@@ -191,9 +179,26 @@
                                         <th>Descrição</th>
                                     </tr>
                                 </tfoot>
-                                <tbody id="corpo_tabela">
+                            
+                                    <tbody id="corpo_tabela">
+
+                                        @foreach ($servicos_requesitados as $servico)
+                                            <tr data-id="{{$servico->id_servico}}">
+                                                <td id="celula-nome">{{ $servico->nome_servico }}</td>
+                                                <td id="celula-descricao">{{ $servico->descricao }} </td>
+                                                <td class="col-acoes">
+                                                    <div class="btn-group btn-group-sm" role="group" aria-label="Ações">
+                                                        <button type="button" class="btn btn-primary editar mx-1">
+                                                            <i class="bi bi-pen-fill editar"></i></button>
+                                                        <button type="button" class="btn btn-danger deletar mx-1"><i
+                                                                class="bi bi-trash deletar"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+    
+                                    </tbody>
                                 
-                                </tbody>
                             </table>
                             
                             <div id="botoes" class="d-none">
@@ -254,24 +259,24 @@
                                                         <div class="row mb-5">
                                                             <div class="col-sm-10">
 
-                                                                @foreach ($checklists as $checklist)
-                                                                    <div class="row mb-3">
-                                                                        <div class="col-sm-10">
-                                                                            <div class="form-check">
-                                                                                <input id="{{ $checklist->id_checklist }}"
-                                                                                    class="form-check-input larger"
-                                                                                    type="checkbox" name="item_check[]"
-                                                                                    value="{{ $checklist->id_checklist }}"
-                                                                                    @if (is_array(old('item_check')) && in_array($checklist->id_checklist, old('item_check'))) checked @endif>
-                                                                                <label class="form-check-label"
-                                                                                    for="">
-                                                                                    {{ $checklist->nome_item }}
-                                                                                </label>
-                                                                            </div>
+                                                                @foreach ($manutencao_preventiva_cheklist as $checklist)
+                                                                <div class="row mb-3">
+                                                                    <div class="col-sm-10">
+                                                                        <div class="form-check">
+                                                                            <input id="{{  $checklist->id_checklist }}"
+                                                                                class="form-check-input larger"
+                                                                                type="checkbox" name="item_check[]"
+                                                                                value="{{  $checklist->id_checklist }}"
+                                                                                @if ($checklist->item_selecionado == 1) checked
+                                                                                @elseif(is_array(old('item_check')) && in_array( $checklist->id_checklist, old('item_check')))checked @endif>
+                                                        
+                                                                            <label class="form-check-label" for="">
+                                                                                {{ $checklist->nome_item }}
+                                                                            </label>
                                                                         </div>
                                                                     </div>
-                                                                @endforeach
-
+                                                                </div>
+                                                            @endforeach
                                                                 <div class="row mb-3">
                                                                     <label class="form-check-label" for="gridCheck3">
                                                                         Breve considreçoes da anormalias
