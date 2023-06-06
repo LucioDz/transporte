@@ -334,5 +334,105 @@ class ManutencaoController extends Controller
         return view('manutencao.editar', $dados);
     }
 
+    public function ActualizarManutencaoPreventiva(Request $receber)
+    {
+        $rules = [
+            'descricao' => ['present'],
+            'tipo_manutencao' => ['required'],
+            //'situacao_os' => ['required'],
+            'veiculo' => ['required', 'numeric'],
+            'previsao_da_manutencao' => ['required'],
+            'item_check' => ['required', "array"],
+            'servicos' => ['required'],
+            'imagens.*' => ['required', 'image', 'mimetypes:image/jpeg,image/png', 'max:10240'],
+        ];
+
+
+        $messages = [
+            'item_check.required' => 'Selecione um item no checklist'
+        ];
+
+        $validator = Validator::make($receber->all(), $rules, $messages);
+
+        /// $arquivo = $_FILES['imagens'];
+
+        if ($validator->fails()) {
+
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 400);
+        } 
+        
+        else {
+
+            $dados_actulizar = [
+                'tipo_manutencao' => $receber->tipo_manutencao,
+                'previsao_da_manutencao' => $receber->previsao_da_manutencao,
+                'descricao' => $receber->previsao_da_manutencao,
+                'veiculo' => $receber->id_veiculo,
+
+            ];
+
+            $ordem_servico = DB::table('manutencao_preventiva')->where('id_preventiva',$receber->id)->update($dados_actulizar);
+
+            //Actulizando servicos da os
+            // convertendo o $receber->servicos em um array
+            $servicos_array = json_decode($receber->servicos, true);
+            // array_slice ira eliminar a primeira linha
+            // a primeira linha contem valores vazios que sao envidos pelo javascript
+            // quando o array é criado
+            $servicos_sem_primeira_linha = array_slice($servicos_array, 1);
+
+            if (count($servicos_sem_primeira_linha) > 0) {
+
+                foreach ($servicos_sem_primeira_linha as $serv) {
+
+                    $dados_servico = [
+                        'nome_servico' =>  $serv['nome'],
+                        'descricao' => $serv['descricao'] ?? ''
+                    ];
+
+                    // verificando se servico ja existe antes de aculizar
+                    if (isset($serv['LinhaAdicionadaViaJavascript'])) {
+
+                        $servico = new manutencaopreventivaservicos();
+                        $servico->nome_servico =  $serv['nome'];
+                        $servico->descricao =  $serv['descricao'] ?? '';
+                        $servico->id_os = $receber->id;
+                        $servico->save();
+                    } else {
+
+                        $TabelaServico = DB::table('manutencaopreventivaservicos')
+                            ->where('id_servico', $serv['id'])->update($dados_servico);
+                    }
+                }
+            }
+
+            // actulizando o checklist_portaria
+            $tabela_checklist = DB::table('manutencao_preventiva_cheklist')->where('id_preventiva', $receber->id)->get('id_checklist');
+            $anormalias_registradas = $receber->item_check;
+            foreach ($tabela_checklist as $ch) {
+
+                if (in_array($ch->id_os_checklist, $anormalias_registradas)) {
+                    $dados = [
+                        'item_selecionado' => 1
+                    ];
+                } else {
+                    $dados = [
+                        'item_selecionado' => 0,
+                    ];
+                }
+                $checklist = DB::table('manutencao_preventiva_cheklist')->where('manutencao_preventiva_cheklist', $ch->id_os_checklist)->update($dados);
+            }
+
+            return response()->json([
+                'success' => true,
+                'servicos' => $servicos_sem_primeira_linha
+            ], 200);
+        }
+    }
+
+
     
 }
