@@ -237,6 +237,9 @@
                                         <li><a class="dropdown-item" href="/manutencao/preventiva">
                                             Manutenção preventiva</a></li>
                                     <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="/manutencao/preventiva/listar">
+                                        Manutenção preventiva Listar</a></li>
+                                <hr class="dropdown-divider">
                                         <li><a class="dropdown-item" href="/portaria/listar">
                                                 Manutenções</a></li>
                                         <hr class="dropdown-divider">
@@ -343,6 +346,7 @@
                     <script type="text/javascript" src="/assets/plugins/select2/dist/js/jquery.js"></script>
                     <script type="text/javascript" src="/assets/plugins/select2/dist/js/select2.min.js"></script>
                     <script type="text/javascript" src="/js/funcoes.js"></script>
+                    <script type="text/javascript" src="/js/funcoes2.js"></script>
                     <script src="/js/meuscript.js"></script>
                     {{-- <script src="/assets/simple-datatables/simple-datatables.js"></script> --}}
                     <script type="text/javascript" src="/assets/plugins/Galeria\js_galeria/jquery.magnific-popup.js"></script><!-- Galeria 2ª link -->

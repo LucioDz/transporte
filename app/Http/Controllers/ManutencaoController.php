@@ -370,8 +370,7 @@ class ManutencaoController extends Controller
                 'tipo_manutencao' => $receber->tipo_manutencao,
                 'previsao_da_manutencao' => $receber->previsao_da_manutencao,
                 'descricao' => $receber->previsao_da_manutencao,
-                'veiculo' => $receber->id_veiculo,
-
+                'id_veiculo' => $receber->veiculo,
             ];
 
             $ordem_servico = DB::table('manutencao_preventiva')->where('id_preventiva',$receber->id)->update($dados_actulizar);
@@ -409,12 +408,17 @@ class ManutencaoController extends Controller
                 }
             }
 
-            // actulizando o checklist_portaria
-            $tabela_checklist = DB::table('manutencao_preventiva_cheklist')->where('id_preventiva', $receber->id)->get('id_checklist');
+            $tabela_checklist = DB::table('manutencao_preventiva_cheklist')->where('id_preventiva',$receber->id)->get('id_checklist');
+
+            dd($tabela_checklist);
+          
+            // recuperando todas anormalias registradas pelo usurio no checkilist
             $anormalias_registradas = $receber->item_check;
+
             foreach ($tabela_checklist as $ch) {
 
-                if (in_array($ch->id_os_checklist, $anormalias_registradas)) {
+            // verificando se o usario selecionou alguma anormalia no checklist
+                if (in_array($ch->id_checklist,$anormalias_registradas)) {
                     $dados = [
                         'item_selecionado' => 1
                     ];
@@ -423,7 +427,7 @@ class ManutencaoController extends Controller
                         'item_selecionado' => 0,
                     ];
                 }
-                $checklist = DB::table('manutencao_preventiva_cheklist')->where('manutencao_preventiva_cheklist', $ch->id_os_checklist)->update($dados);
+                $checklist = DB::table('manutencao_preventiva_cheklist')->where('id_checklist',$ch->id_checklist)->update($dados);
             }
 
             return response()->json([

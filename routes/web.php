@@ -159,6 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/os/pesquisar', [OrdemServicoController::class,'pesquisar']);
                 /************************ Manutençao preventiva *************************/
                 Route::get('/manutencao/preventiva',[ManutencaoController::class,'criar']);
+                Route::get('/manutencao/preventiva/listar',[ManutencaoController::class, 'listar']);
                 Route::post('/manutencao/preventiva/add',[ManutencaoController::class,'store']);
                 Route::get('/manutencao/preventiva/listar',[ManutencaoController::class,'listar']);
                 Route::get('/manutencao/preventiva/checklist/{id}',[ManutencaoController::class,'manutencaochecklist']);
@@ -171,6 +172,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/manutencao/preventiva/imagens/deletar/{id}',[ManuPrentivaImagemController::class,'DeletarImagem']);
                 Route::get('/manutencao/preventiva/imagens/editar/{id}', [ManuPrentivaImagemController::class, 'verImagem']);
                 Route::put('/manutencao/preventiva/imagens/actualizar/{id}', [ManuPrentivaImagemController::class, 'ActulizarImagem']);
+               
                 
               
          });

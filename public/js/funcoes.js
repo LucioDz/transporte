@@ -1,5 +1,3 @@
-
-
 /// codigo para o o formulario editar
 if (document.querySelector('.formulario')) {
 
@@ -256,7 +254,7 @@ document.addEventListener('click', (evento) => {
                 botaoFechar.addEventListener('click', () => {
                     document.querySelector('.modal-backdrop').remove();
                 })
-
+                
                 mostrar_incluir_servico2()
 
             });
@@ -387,7 +385,7 @@ if (document.querySelector("#FormularioOrdemServicoEditar")) {
 
     FormularioOrdemServicoEditar.addEventListener('submit', async (evento) => {
 
-
+       
         evento.preventDefault();
 
         const url = window.location.pathname;
@@ -439,141 +437,66 @@ if (document.querySelector("#FormularioOrdemServicoEditar")) {
 }
 
 /********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
-/********** Formularioa Manutenção preventiva ********************************/
 
-if (document.querySelector("#FormularioOrdemServicoEditar")) {
+const FormularioManutencaoPreventiva = document.querySelector("#FormularioManutencaoPreventiva")
 
-    const FormularioManutencaoPreventiva = document.querySelector("#FormularioManutencaoPreventiva")
+FormularioManutencaoPreventiva.addEventListener('submit', async (evento) => {
 
-    FormularioManutencaoPreventiva.addEventListener('submit', async (evento) => {
-
-        var headers = {
+     var headers = {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         }
 
-        evento.preventDefault();
+    evento.preventDefault();
 
-        const botaoEnvio = document.querySelector('#SalvarManutencaoPreventiva');
-        // desativando o botao de envio
-        botaoEnvio.disabled = true;
+    const botaoEnvio = document.querySelector('#SalvarManutencaoPreventiva');
+    // desativando o botao de envio
+    botaoEnvio.disabled = true;
 
-        const dadosForm = new FormData(FormularioManutencaoPreventiva);
+    const dadosForm = new FormData(FormularioManutencaoPreventiva);
 
-        const imagens = document.getElementById("imagens").files;
-        //enviado as imagens
-        if (imagens.length > 0) {
+    const imagens = document.getElementById("imagens").files;
+    //enviado as imagens
+    if (imagens.length > 0) {
 
-            for (let i = 0; i < imagens.length; i++) {
-                dadosForm.append("imagens[]", imagens[i]);
-            }
+        for (let i = 0; i < imagens.length; i++) {
+            dadosForm.append("imagens[]", imagens[i]);
         }
-        dadosForm.append("servicos", JSON.stringify($servicos_requesitados.servicos));
-        //Fazendo a requisição
-        const dados = await fetch("/manutencao/preventiva/add", {
-            method: "POST",
-            body: dadosForm,
-            headers: headers
-        })
-
-        const resposta = await dados.json();
-
-        if (resposta['errors']) {
-
-            //activando o botao de envio
-            botaoEnvio.disabled = false;
-
-            var errorMessages = document.getElementById('error-messages');
-            errorMessages.style.display = 'block';
-            errorMessages.innerHTML = '';
-            for (var key in resposta.errors) {
-                var errorMessage = document.createElement('li');
-                errorMessage.innerHTML = resposta.errors[key];
-                errorMessages.appendChild(errorMessage);
-            }
-        } else {
-            if (resposta['success']) {
-                sessionStorage.setItem('msg', 'Cadastro realizado com sucesso');
-                window.location.href = "/manutencao/preventiva/listar";
-            }
-        }
-
+    }
+    dadosForm.append("servicos", JSON.stringify($servicos_requesitados.servicos));
+    //Fazendo a requisição
+    const dados = await fetch("/manutencao/preventiva/add", {
+        method: "POST",
+        body: dadosForm,
+        headers: headers
     })
 
-    /*
-    // remover a mensagem após exibir os dados 
-    window.addEventListener('load', function () {
-        //(a removendo a sessao)
-        sessionStorage.removeItem('msg');
-    });
-    */
+    const resposta = await dados.json();
 
-    /******************************************************************************/
+    if (resposta['errors']) {
 
-    const FormularioManutencaoPreventivaEditar = document.querySelector("#FormularioManutencaoPreventivaEditar")
+        //activando o botao de envio
+        botaoEnvio.disabled = false;
 
-    FormularioManutencaoPreventivaEditar.addEventListener('submit', async (evento) => {
-
-        evento.preventDefault();
-
-        //recuperado o id da url
-        const url = window.location.pathname;
-        const id = url.substring(url.lastIndexOf('/') + 1);
-        const Idurl = !isNaN(id) ? Number(id) : null;
-
-        const botaoEnvio = document.querySelector('#ActualizarManutencaoPreventiva');
-        // desativando o botao de envio
-        botaoEnvio.disabled = true;
-
-        const dadosForm = new FormData(FormularioManutencaoPreventivaEditar);
-
-        var headers = {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        var errorMessages = document.getElementById('error-messages');
+        errorMessages.style.display = 'block';
+        errorMessages.innerHTML = '';
+        for (var key in resposta.errors) {
+            var errorMessage = document.createElement('li');
+            errorMessage.innerHTML = resposta.errors[key];
+            errorMessages.appendChild(errorMessage);
         }
-
-        dadosForm.append("servicos", JSON.stringify(pegarServicos()));
-        //Fazendo a requisição
-        const dados = await fetch("/manutencao/preventiva/actualizar/" + Idurl, {
-            method: "POST",
-            body: dadosForm,
-            headers: headers
-        })
-
-        const resposta = await dados.json();
-
-        if (resposta['errors']) {
-
-            //activando o botao de envio
-            botaoEnvio.disabled = false;
-
-            var errorMessages = document.getElementById('error-messages');
-            errorMessages.style.display = 'block';
-            errorMessages.innerHTML = '';
-            for (var key in resposta.errors) {
-                var errorMessage = document.createElement('li');
-                errorMessage.innerHTML = resposta.errors[key];
-                errorMessages.appendChild(errorMessage);
-            }
-        } else {
-            if (resposta['success']) {
-                sessionStorage.setItem('msg', 'Dados actualizado com sucesso');
-                window.location.href = "/os/listar";
-            }
+    } else {
+        if (resposta['success']) {
+            sessionStorage.setItem('msg', 'Cadastro realizado com sucesso');
+            window.location.href = "/manutencao/preventiva/listar";
         }
+    }
 
-    })
+})
 
-}
-
+// remover a mensagem após exibir os dados 
+window.addEventListener('load', function () {
+    //(a removendo a sessao)
+    sessionStorage.removeItem('msg');
+});
 
