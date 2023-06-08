@@ -245,12 +245,12 @@
                                                         <div class="row mb-3">
                                                             <div class="col-sm-10">
                                                                 <div class="form-check">
-                                                                    <input id="{{ $checklist->id_checklist }}"
+                                                                    <input id="{{ $checklist->id_checklist_manutencao }}"
                                                                         class="form-check-input larger" type="checkbox"
                                                                         name="item_check[]"
-                                                                        value="{{ $checklist->id_checklist }}"
+                                                                        value="{{ $checklist->id_checklist_manutencao }}"
                                                                         @if ($checklist->item_selecionado == 1) checked
-                                                                                @elseif(is_array(old('item_check')) && in_array($checklist->id_checklist, old('item_check')))checked @endif>
+                                                                                @elseif(is_array(old('item_check')) && in_array($checklist->id_checklist_manutencao, old('item_check')))checked @endif>
 
                                                                     <label class="form-check-label" for="">
                                                                         {{ $checklist->nome_item }}
@@ -265,7 +265,8 @@
                                                         </label>
                                                         <div class="col-sm-12">
                                                             <div class="form-floating">
-                                                                <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height:100px;" name="descricao">{{ old('descricao') }}</textarea>
+                                                                <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height:100px;" name="descricao">
+                                                                    {{ old('descricao',$descriao_checklist) }}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -294,7 +295,7 @@
         </div>
 
         <div class="text-center">
-            <button type="button" class="btn btn-primary" onclick="mostrar_cadastrar()">Cadastrar</button>
+            <button type="button" class="btn btn-danger" onclick="mostrar_cadastrar()">Actualizar</button>
         </div>
 
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -313,7 +314,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-danger"
-                            id="ActualizarManutencaoPreventiva">Actualizar</button>
+                            id="ActualizarManutencaoPreventiva">Salvar</button>
                     </div>
                 </div>
             </div>
@@ -350,7 +351,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
-                            <button type="submit" class="btn btn-primary"> Adicionar</button>
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
                         </div>
                     </form>
 

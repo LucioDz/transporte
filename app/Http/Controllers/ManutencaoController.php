@@ -313,8 +313,13 @@ class ManutencaoController extends Controller
             $manutencao_preventiva_cheklist = DB::table('manutencao_preventiva')
                 ->join('manutencao_preventiva_cheklist', 'manutencao_preventiva_cheklist.id_preventiva', '=', 'manutencao_preventiva.id_preventiva')
                 ->join('checklists', 'checklists.id_checklist', '=', 'manutencao_preventiva_cheklist.fk_id_item_checklist')
-                ->select('manutencao_preventiva.*', 'manutencao_preventiva_cheklist.*', 'checklists.*')
+                ->select('manutencao_preventiva.*', 
+                'manutencao_preventiva_cheklist.id_checklist as id_checklist_manutencao', 
+                'manutencao_preventiva_cheklist.item_selecionado as item_selecionado', 
+                'checklists.*')
                 ->where('manutencao_preventiva.id_preventiva', '=', $id)->get();
+
+                //dd($manutencao_preventiva_cheklist);
 
           $checklist = DB::table('checklists')->orderBy('nome_item', 'ASC')->get();
 
@@ -369,7 +374,7 @@ class ManutencaoController extends Controller
             $dados_actulizar = [
                 'tipo_manutencao' => $receber->tipo_manutencao,
                 'previsao_da_manutencao' => $receber->previsao_da_manutencao,
-                'descricao' => $receber->previsao_da_manutencao,
+                'descricao' => $receber->descricao ?? '',
                 'id_veiculo' => $receber->veiculo,
             ];
 
@@ -410,7 +415,15 @@ class ManutencaoController extends Controller
 
             $tabela_checklist = DB::table('manutencao_preventiva_cheklist')->where('id_preventiva',$receber->id)->get('id_checklist');
 
-            dd($tabela_checklist);
+            //dd($tabela_checklist);
+            //dd($receber->item_check);
+              /*
+            $dados = [
+                 "table" =>$tabela_checklist,
+                 "intes" => $receber->item_check
+            ];
+            */
+            //dd($dados);
           
             // recuperando todas anormalias registradas pelo usurio no checkilist
             $anormalias_registradas = $receber->item_check;
