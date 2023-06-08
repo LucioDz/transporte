@@ -258,8 +258,10 @@ class ManutencaoController extends Controller
                     ->where('manutencao_preventiva.id_preventiva', '=', $id)->get();
 
                 $servicos_requesitados = DB::table('manutencao_preventiva')
-                    ->join('manutencaopreventivaservicos', 'manutencaopreventivaservicos.id_servico', '=', 'manutencao_preventiva.id_preventiva')
+                    ->join('manutencaopreventivaservicos', 'manutencaopreventivaservicos.id_preventiva', '=','manutencao_preventiva.id_preventiva')
                     ->select('manutencao_preventiva.*', 'manutencaopreventivaservicos.*',)->where('manutencaopreventivaservicos.id_preventiva', '=', $id)->get();
+
+                 //dd($servicos_requesitados);
 
                 $checklist = DB::table('checklists')->orderBy('nome_item', 'ASC')->get();
 
