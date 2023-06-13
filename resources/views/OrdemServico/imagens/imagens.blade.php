@@ -10,7 +10,7 @@
 
         <div class="row">
 
-            <h1 class='text-center'>Imagens Registradas na {{ $ordemServico[0]->tipo_os }} do veiculo
+            <h1 class='text-center'>Imagens Registradas na ordem de serviço do veiculo
                 {{ $ordemServico[0]->prefixo }}
                 <hr class="font-weight-bolder display-5" style="background-color:#000000">
 

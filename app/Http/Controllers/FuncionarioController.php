@@ -51,7 +51,7 @@ class FuncionarioController extends Controller
         if ($funcionario->save()) {
             return redirect('funcionario/listar/base')->with('msg', 'Cadastro relizado com sucesso');
         } else {
-            return redirect('funcionario/listar/base')->with('ERRO', 'Erro ao salvar funcionario na Base de dados');
+            return redirect('funcionario/listar/base')->with('ERRO', 'Erro ao salvar os dados na Base de dados');
         }
     }
 
@@ -202,7 +202,7 @@ class FuncionarioController extends Controller
         $funcionario = DB::table('funcionarios')->where('id_funcionario', $receber->id)->update($dados_actulizar);
 
         if ($funcionario) {
-            return redirect('/funcionario/listar')->with('msg', 'Funcionario Actulizado com sucesso');
+            return redirect('/funcionario/listar')->with('msg', 'Dados actualizados com sucesso');
         } else {
             return redirect('/funcionario/listar')->with('ERRO', 'Erro ao actualizar dados tente novamente');
         }

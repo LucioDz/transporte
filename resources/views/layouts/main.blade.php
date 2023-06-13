@@ -209,7 +209,7 @@
                                                 Listar Minhas Entradas/Saidas</a></li>
                                         <hr class="dropdown-divider">
                                         <li><a class="dropdown-item" href="/portaria/listar/base">
-                                                Listar Base</a></li>
+                                                Listar Entradas/Saidas da Base</a></li>
                                         <hr class="dropdown-divider">
                                     </ul>
                                 </li>
@@ -219,7 +219,7 @@
                                         id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                         <div class="fs-5 text-secondary">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="28"
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                 fill="currentColor" class="bi bi-wrench-adjustable"
                                                 viewBox="0 0 16 16">
                                                 <path
@@ -231,79 +231,54 @@
                                         Manutenção/OS
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="/os/listar">
+                                        <li><a class="dropdown-item" href="/os/criar">
                                                 Ordem de Serviço</a></li>
                                         <hr class="dropdown-divider">
-                                        <li><a class="dropdown-item" href="/manutencao/preventiva">
-                                            Manutenção preventiva</a></li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="/manutencao/preventiva/listar">
-                                        Manutenção preventiva Listar</a></li>
-                                <hr class="dropdown-divider">
-                                        <li><a class="dropdown-item" href="/portaria/listar">
-                                                Manutenções</a></li>
+                                        <li><a class="dropdown-item" href="/os/listar">
+                                                Ordem de Serviço Listar</a></li>
                                         <hr class="dropdown-divider">
-
+                                        <li><a class="dropdown-item" href="/manutencao/preventiva">
+                                                Manutenção preventiva</a></li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item" href="/manutencao/preventiva/listar">
+                                                Manutenção preventiva Listar</a></li>
                                     </ul>
                                 </li>
 
                                 <li class="nav-item dropdown">
-                                    <div class="dropdown ">
-                                        <a href="#"
-                                            class="d-block link-primary text-decoration-none dropdown-toggle"
-                                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                            @if (Auth()->user()->funcionario->imagem != null)
-                                                <img src="{{ asset('storage/' . Auth()->user()->funcionario->imagem) }}"
-                                                    class="rounded-circle" alt="mdo" width="52"
-                                                    height="52">
-                                            @else
-                                                <img src="/img/perfilsemfoto.jpg" alt="Profile"
-                                                    class="rounded-circle" alt="mdo" width="52"
-                                                    height="52">
-                                            @endif
-
-                                        </a>
-                                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                            <li><a class="dropdown-item"
-                                                    href="/funcionario/perfil/{{ Auth()->user()->funcionario->id_funcionario }}"
-                                                    class="text-dark">Perfil</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    onclick="event.preventDefault();
+                                    <a class="nav-link dropdown-toggle text-center" href="#"
+                                        id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        @if (Auth()->user()->funcionario->imagem != null)
+                                            <img src="{{ asset('storage/' . Auth()->user()->funcionario->imagem) }}"
+                                                class="rounded-circle" alt="mdo" width="45" height="45">
+                                        @else
+                                            <img src="/img/perfilsemfoto.jpg" alt="Profile" class="rounded-circle"
+                                                alt="mdo" width="52" height="52">
+                                        @endif
+                                        Perfil
+                                    </a>
+                                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                        <li><a class="dropdown-item"
+                                                href="/funcionario/perfil/{{ Auth()->user()->funcionario->id_funcionario }}"
+                                                class="text-dark">Ver Perfil</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
                                                   document.getElementById('logout-form').submit();">
-                                                    Sair
-                                                </a>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                    class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </div>
-
+                                                Sair
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
-                            </li>
-
-                            <ul class="mx-auto">
-
-                            </ul>
-
-                            <!--
-                        <ul class="text-center mt-2">
-                            <li class="me-3">
-                                <a class="text-white text-center" href="/paginas/sobre">
-                                    <div class="icon-badge-container">
-                                        <i class="far fa-envelope icon-badge-icon"></i>
-                                        <div class="icon-badge">6</div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                        -->
                         </div>
                     </div>
                 </nav>
@@ -326,12 +301,13 @@
                             </p>
                         @endif
 
-                         <!-- Elemento HTML para exibir a mensagem -->
-                         <div class="alert alert-success mx-auto col-8 m-2 text-center fs-5" id="msg" style="display: none;"></div>
+                        <!-- Elemento HTML para exibir a mensagem -->
+                        <div class="alert alert-success mx-auto col-8 m-2 text-center fs-5" id="msg"
+                            style="display: none;"></div>
 
                         @yield('content')
- 
-                  </div>
+
+                    </div>
                 </div>
                 <main>
 
@@ -341,7 +317,7 @@
 
                     <script src="/js/jspdf.js"></script>
                     <script src="/js/script.js"></script>
-                    <script src="/js/bootstrap.bundle.min.js"></script>    
+                    <script src="/js/bootstrap.bundle.min.js"></script>
                     <script src="https://printjs-4de6.kxcdn.com/print.min.css"></script>
                     <script type="text/javascript" src="/assets/plugins/select2/dist/js/jquery.js"></script>
                     <script type="text/javascript" src="/assets/plugins/select2/dist/js/select2.min.js"></script>
@@ -360,12 +336,11 @@
                         if (msg !== null && msg !== '') {
                             document.getElementById('msg').innerHTML = msg;
                             document.getElementById('msg').style.display = 'block';
-                            
+
                             console.log(document.getElementById('msg'));
                         }
 
                         console.log(msg);
-
                     </script>
         </body>
 

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title','Tcul')
+@section('title','Tcul - Transporte coletivo urbano de Luanda')
 
 @section('content')
 

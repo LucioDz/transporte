@@ -32,11 +32,13 @@
                             @endif
                             <h2 class="text-capitalize">{{ $funcionario->Nome }}&nbsp;{{ $funcionario->Sobrenome }}</h2>
                             <h3 class="text-capitalize">{{ $funcionario->funcionario_tipo }}</h3>
-                            <div class="social-links mt-2 d-none">
-                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            <div class="social-links mt-2">
+                                <a  href="/funcionario/editar/{{ Auth()->user()->funcionario->id_funcionario }}" class="btn btn-primary">
+                                 <i class="bi bi-file-earmark-person"></i></a>
+                                <a href="#" class="twitter d-none"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook d-none"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram d-none"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin d-none"><i class="bi bi-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
