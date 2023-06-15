@@ -24,10 +24,17 @@ class BaseController extends Controller
 
         $muncipios_provincias = DB::table('municipios')
             ->join('provincias', 'provincias.id_provincia', '=', 'municipios.id_provincia')
-            ->select('municipios.*', 'provincias.*')->orderBy('provincias.nome_provincia', 'ASC')
+            ->select(
+            'municipios.*',
+            'provincias.*',
+            'provincias.id_provincia as provincia_id',
+            'municipios.id_provincia as municipio_id_provincia'
+             )
+
+            ->orderBy('provincias.nome_provincia', 'ASC')
             ->get();
 
-        //   dd($muncipios_provincias);
+        //dd($muncipios_provincias);
 
         $dados = [
             'exibir_formulario_provincia' => 'd-none',
@@ -35,7 +42,6 @@ class BaseController extends Controller
             'muncipios_provincias' => $muncipios_provincias,
         ];
 
-        //  dd($muncipios_provincias);
 
         return view('base.cadastrar', $dados);
     }
@@ -153,8 +159,13 @@ class BaseController extends Controller
         $Base = DB::table('bases')
             ->join('municipios', 'municipios.id_municipio', '=', 'bases.id_municipio')
             ->join('provincias', 'provincias.id_provincia', '=', 'municipios.id_provincia')
-            ->select('bases.*', 'municipios.*', 'provincias.*')->where('bases.id_base', '=', $id)
-            ->get();
+            ->select(
+                'bases.*', 
+                'municipios.*',
+                'provincias.*',
+                'provincias.id_provincia as provincia_id',
+                'municipios.id_provincia as municipio_id_provincia'
+                )->where('bases.id_base', '=', $id)->get();
 
         //dd($Base);
         $muncipios_provincias = DB::table('municipios')

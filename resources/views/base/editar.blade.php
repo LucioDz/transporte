@@ -68,10 +68,10 @@
                                             <label for="profileImage"
                                                 class="col-md-4 col-lg-3 col-form-label">Imagem</label>
                                             <div class="col-md-8 col-lg-9">
-                                           
+
                                                 @if ($base[0]->imagem != null)
-                                                    <img  src="{{ asset('storage/'.$base[0]->imagem) }}"
-                                                        height="150px" alt="Profile" id="photo_ferfil">
+                                                    <img src="{{ asset('storage/' . $base[0]->imagem) }}" height="150px"
+                                                        alt="Profile" id="photo_ferfil">
                                                 @else
                                                     <img src="/img/perfilsemfoto.jpg" height="150px" alt="Profile"
                                                         id="photo_ferfil"
@@ -125,21 +125,26 @@
                                                 @enderror
                                             </div>
                                         </div>
-
+                                        
                                         <div class="row mb-3">
                                             <label for="fullName"
                                                 class="col-md-4 col-lg-3 col-form-label">Localidade</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <select id="id_municipio" name="id_municipio"
                                                     class="form-select @error('id_municipio') is-invalid @enderror">
-                                                    <option value-=""></option>
-                                                    @foreach ($muncipios_provincias as $municipio)
-                                                        <optgroup label="{{ $municipio->nome_provincia }}">
-                                                            <option value="{{ $municipio->id_municipio }}"
-                                                                @if (old('id_municipio', $base[0]->id_municipio) == $municipio->id_municipio) selected @endif>
-                                                                {{ $municipio->nome_municipio }} </option>
-                                                        </optgroup>
-                                                    @endforeach
+                                                    <option>............</option>
+                                                    <optgroup label="Províncias">
+                                                        @foreach ($muncipios_provincias as $item)
+                                                            @if ($loop->first || $item->id_provincia !== $muncipios_provincias[$loop->index - 1]->id_provincia)
+                                                                <option value="" disabled>{{ $item->nome_provincia }}
+                                                                </option>
+                                                            @endif
+                                                            <option value="{{ $item->id_municipio }}"
+                                                                @if (old('id_municipio', $base[0]->id_municipio) == $item->id_municipio) selected @endif>
+                                                                {{ $item->nome_municipio }}
+                                                            </option>
+                                                        @endforeach
+                                                    </optgroup>
                                                 </select>
                                                 @error('id_municipio')
                                                     <div class="invalid-feedback">
@@ -147,7 +152,6 @@
                                                     </div>
                                                 @enderror
                                             </div>
-
                                         </div>
 
                                         <div class="row mb-3">
@@ -192,8 +196,8 @@
 
     {{-- Modal enviar dados --}}
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -219,10 +223,10 @@
 
     <script>
         /*
-                 let = document.querySelector('#modalChecklistCategoria');
-                 let minhaModal = new bootstrap.Modal(e);
-                 minhaModal.show();
-            */
+                     let = document.querySelector('#modalChecklistCategoria');
+                     let minhaModal = new bootstrap.Modal(e);
+                     minhaModal.show();
+                */
     </script>
 
 @endsection

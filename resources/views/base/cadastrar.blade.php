@@ -117,24 +117,20 @@
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="fullName"
-                                                class="col-md-4 col-lg-3 col-form-label">Localidade</label>
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Localidade</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <select id="id_municipio" name="id_municipio"
-                                                    class="form-select @error('id_municipio') is-invalid @enderror">
-
-                                                    <optgroup label="Cats">
-                                                        <option>Tiger</option>
-                                                        <option>Leopard</option>
-                                                        <option>Lynx</option>
+                                                <select id="id_municipio" name="id_municipio" class="form-select @error('id_municipio') is-invalid @enderror">
+                                                   <option>............</option>
+                                                    <optgroup label="Províncias">
+                                                        @foreach ($muncipios_provincias as $item)
+                                                            @if ($loop->first || $item->provincia_id !== $muncipios_provincias[$loop->index - 1]->provincia_id)
+                                                                <option value="" disabled>{{ $item->nome_provincia }}</option>
+                                                            @endif
+                                                            <option value="{{ $item->id_municipio }}" @if (old('id_municipio') == $item->id_municipio) selected @endif>
+                                                                {{ $item->nome_municipio }}
+                                                            </option>
+                                                        @endforeach
                                                     </optgroup>
-
-                                                    <optgroup label="Dogs">
-                                                        <option>Grey Wolf</option>
-                                                        <option>Red Fox</option>
-                                                        <option>Fennec</option>
-                                                    </optgroup>
-
                                                 </select>
                                                 @error('id_municipio')
                                                     <div class="invalid-feedback">
@@ -142,34 +138,8 @@
                                                     </div>
                                                 @enderror
                                             </div>
-
                                         </div>
-
-                                        <div class="row mb-3">
-                                            <label for="fullName"
-                                                class="col-md-4 col-lg-3 col-form-label">Localidade</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <select id="base" name="id_municipio"
-                                                    class="form-select @error('id_municipio') is-invalid @enderror">
-                                                    @foreach ($muncipios_provincias as $municipio)
-                                                        <optgroup label="{{ $municipio->nome_provincia }}">
-                                                             @foreach ($muncipios_provincias as $municipio)
-                                                                <option value="{{ $municipio->id_municipio }}"
-                                                                    @if (old('id_municipio') == $municipio->id_municipio) selected @endif>
-                                                                    {{ $municipio->nome_municipio }}</option>
-                                                             @endforeach
-                                                        </optgroup>
-                                                    @endforeach
-                                                </select>
-                                                @error('id_municipio')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-
-                                        </div>
-
+                                        
                                         <div class="row mb-3">
                                             <label for="about" class="col-md-4 col-lg-3 col-form-label">Descricão</label>
                                             <div class="col-md-8 col-lg-9">
@@ -239,10 +209,10 @@
 
     <script>
         /*
-                     let = document.querySelector('#modalChecklistCategoria');
-                     let minhaModal = new bootstrap.Modal(e);
-                     minhaModal.show();
-                */
+                         let = document.querySelector('#modalChecklistCategoria');
+                         let minhaModal = new bootstrap.Modal(e);
+                         minhaModal.show();
+                    */
     </script>
 
 @endsection
