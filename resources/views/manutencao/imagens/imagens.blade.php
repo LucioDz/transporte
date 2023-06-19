@@ -46,13 +46,13 @@
         </div>
 
         @can('update',$manutencao_preventiva)
-            <div class="row text-center mt-2">
+            <div class="row text-center mt-5">
                 <h5 class="text-center">Adicionar Imagens</h5>
 
                 <div class="col-md-8 col-lg-8 mx-auto text-center">
                     <form method="POST" action="/manutencao/preventiva/imagens/adicionar/{{$id_preventiva}}" enctype="multipart/form-data">
                         @csrf
-                        <div class="row mt-2">
+                        <div class="row">
                             <input type="file" multiple="multiple" name="imagens[]"
                                 class="btn btn-primary @error('imagens') is-invalid @enderror">
                             @error('imagens')
