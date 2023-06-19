@@ -56,7 +56,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Sobrenome</th>
-                        <th>numero_mecanografica</th>
+                        <th>Numero_mecanografico</th>
                         <th>Tipo</th>
                         <th>Base</th>
                         <th>Perfil</th>
@@ -68,7 +68,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Sobrenome</th>
-                        <th>numero_mecanografica</th>
+                        <th>Numero_mecanografico</th>
                         <th>Tipo</th>
                         <th>Base</th>
                         <th>editar</th>

@@ -270,16 +270,16 @@
 
                                     <thead>
                                         <tr>
-                                            <th>muncipio</th>
-                                            <th>provincia</th>
+                                            <th>Muncipio</th>
+                                            <th>Provincia</th>
                                             <th>editar</th>
                                             <th>Deletar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>muncipio</th>
-                                            <th>provincia</th>
+                                            <th>Muncipios</th>
+                                            <th>Provincia</th>
                                             <th>editar</th>
                                             <th>Deletar</th>
                                         </tr>

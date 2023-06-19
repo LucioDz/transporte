@@ -48,7 +48,7 @@
                 <div class="col-md-8 col-lg-8 mx-auto text-center">
                     <form method="POST" action="adicionar/{{ $id_portaria }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="row mt-5">
+                        <div class="row">
                             <input type="file" multiple="multiple" name="imagens[]"
                                 class="btn btn-primary @error('imagens') is-invalid @enderror">
                             @error('imagens')

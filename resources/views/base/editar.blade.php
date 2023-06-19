@@ -163,7 +163,7 @@
 
                                         <div class="text-center">
                                             <span onclick="mostrar_cadastrar()" data-toggle="modal"
-                                                data-target="#exampleModalCenter" class="btn btn-info">Actulizar</span>
+                                                data-target="#exampleModalCenter" class="btn btn-info">Actualizar</span>
                                         </div>
                                         <!-- End Profile Edit Form -->
                                 </div>

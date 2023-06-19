@@ -202,9 +202,9 @@ class FuncionarioController extends Controller
         $funcionario = DB::table('funcionarios')->where('id_funcionario', $receber->id)->update($dados_actulizar);
 
         if ($funcionario) {
-            return redirect('/funcionario/listar')->with('msg', 'Dados actualizados com sucesso');
+            return redirect('/funcionario/listar/base')->with('msg', 'Dados actualizados com sucesso');
         } else {
-            return redirect('/funcionario/listar')->with('ERRO', 'Erro ao actualizar dados tente novamente');
+            return redirect('/funcionario/listar/base')->with('ERRO', 'Erro ao actualizar dados tente novamente');
         }
     }
 
@@ -220,7 +220,7 @@ class FuncionarioController extends Controller
         $TotalDeSaidas = array();
         $Ultima_Entrada_Do_Veiculo = array();
         $Ultima_saida_Do_Veiculo = array();
-        
+
         $base_do_funcionario = DB::table('bases')
             ->join('municipios', 'municipios.id_municipio', '=', 'bases.id_municipio')
             ->join('provincias', 'provincias.id_provincia', '=', 'municipios.id_provincia')
@@ -246,7 +246,7 @@ class FuncionarioController extends Controller
 
                 $TotaldeSaidasEntradas = DB::table('portaria')->where($perfil, $id)->get();
 
-                if (DB::table('portaria')->where($perfil,'=',$id)->where('portaria_tipo', '=','Entrada')->exists()) {
+                if (DB::table('portaria')->where($perfil, '=', $id)->where('portaria_tipo', '=', 'Entrada')->exists()) {
 
                     $TotalDeEntradas = DB::table('portaria')->where($perfil, '=', $id)
                         ->where('portaria_tipo', '=', 'Entrada')->get();
@@ -280,7 +280,7 @@ class FuncionarioController extends Controller
                         ->where('portaria_tipo', '=', 'Entrada')->orderBy('id_portaria', 'Desc')->get();
                 }
 
-                if ($TotalDeSaidas = DB::table('portaria')->where($perfil, '=', $id)->where('portaria_tipo', '=', 'Saida')->exists()) {
+                if (DB::table('portaria')->where($perfil, '=', $id)->where('portaria_tipo', '=', 'Saida')->exists()) {
 
                     $TotalDeSaidas = DB::table('portaria')->where($perfil, '=', $id)->where('portaria_tipo', '=', 'Saida')->get();
 
@@ -326,7 +326,9 @@ class FuncionarioController extends Controller
             'pefil'  => $perfil,
             'id_funcionario' => $id
         ];
-
+ 
+       // dd($TotalDeSaidas);
+        
         return view('funionarios.perfil', $dados);
     }
 
@@ -392,8 +394,4 @@ class FuncionarioController extends Controller
 
         return view('funionarios.listar', $dados);
     }
-
-
 }
-
-

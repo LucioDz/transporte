@@ -312,7 +312,8 @@
                 <main>
 
                     <footer>
-                        <p>Tcul &copy; </p>
+                        <p  class="text-uppercase text-lg">Tcul - Transporte Urbano coletivo de Luanda &copy;
+                            Todos os direitos reservados </p>
                     </footer>
 
                     <script src="/js/jspdf.js"></script>

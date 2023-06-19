@@ -24,8 +24,8 @@
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                             @if ($funcionario->imagem != null)
-                                <img src="{{ Storage::disk('s3')->url($funcionario->imagem) }}" height="150px"
-                                    alt="Profile" id="photo_ferfil" alt="Profile" class="rounded-circle">
+                                <img src="{{ asset('storage/' . $funcionario->imagem) }}" height="150px" alt="Profile"
+                                    id="photo_ferfil" alt="Profile" class="rounded-circle">
                             @else
                                 <img src="/img/perfilsemfoto.jpg" height="150px" alt="Profile" id="photo_ferfil"
                                     alt="Profile" class="rounded-circle">
@@ -33,8 +33,9 @@
                             <h2 class="text-capitalize">{{ $funcionario->Nome }}&nbsp;{{ $funcionario->Sobrenome }}</h2>
                             <h3 class="text-capitalize">{{ $funcionario->funcionario_tipo }}</h3>
                             <div class="social-links mt-2">
-                                <a  href="/funcionario/editar/{{ Auth()->user()->funcionario->id_funcionario }}" class="btn btn-primary">
-                                 <i class="bi bi-file-earmark-person"></i></a>
+                                <a href="/funcionario/editar/{{ Auth()->user()->funcionario->id_funcionario }}"
+                                    class="btn btn-primary">
+                                    <i class="bi bi-file-earmark-person"></i></a>
                                 <a href="#" class="twitter d-none"><i class="bi bi-twitter"></i></a>
                                 <a href="#" class="facebook d-none"><i class="bi bi-facebook"></i></a>
                                 <a href="#" class="instagram d-none"><i class="bi bi-instagram"></i></a>
@@ -136,7 +137,7 @@
                                         <div class="tab-pane fade show entrada-saida" id="entrada-saida">
 
                                             <a class="text-dark" target="blank"
-                                                href="/portaria/listar/TodasEntradasSaidasFuncionario/{{$TotaldeSaidasEntradas[0]->$pefil}}">
+                                                href="/portaria/listar/TodasEntradasSaidasFuncionario/{{ $TotaldeSaidasEntradas[0]->$pefil }}">
                                                 <div class="row P-2 fs-5">
                                                     <div class="col-lg-3 col-md-4 label">
                                                         <span class="text-dark fs-5">
@@ -149,7 +150,7 @@
 
                                             @if (count($TotalDeEntradas) > 0)
                                                 <a class="text-dark" target="blank"
-                                                    href="/portaria/listar/EntradasFuncionario/{{$TotaldeSaidasEntradas[0]->$pefil }}">
+                                                    href="/portaria/listar/EntradasFuncionario/{{ $TotaldeSaidasEntradas[0]->$pefil }}">
                                                     <div class="row P-2 fs-5">
                                                         <div class="col-lg-3 col-md-4 label">
                                                             <span class="text-primary fs-5">
@@ -164,7 +165,7 @@
 
                                             @if (count($TotalDeSaidas) > 0)
                                                 <a class="text-dark" target="blank"
-                                                    href="/portaria/listar/SaidasFuncionario/{{$TotaldeSaidasEntradas[0]->$pefil}}">
+                                                    href="/portaria/listar/SaidasFuncionario/{{ $TotaldeSaidasEntradas[0]->$pefil }}">
                                                     <div class="row P-2 fs-5">
                                                         <div class="col-lg-3 col-md-4 label">
                                                             <span class="text-dark fs-5">
@@ -189,7 +190,7 @@
                                                 </div>
                                             @endif
 
-                                                @if (count($TotalDeEntradas) > 0)
+                                            @if (count($TotalDeEntradas) > 0)
                                                 <div class="row P-2 fs-5">
                                                     <div class="col-lg-3 col-md-4 label">
                                                         <span class="text-primary fs-5">

@@ -174,12 +174,12 @@
                         <div class="card p-4">
                             <h4 class="text-center">
                                 <i class="bi bi-signpost-2-fill"></i>
-                                Selecione o Tipo de Fuinarionario
+                                Selecione o Tipo de Funcionario
                             </h4>
                             <hr>
                             <div class="row mb-3  @error('funcionario_tipo') is-invalid @enderror">
                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label text-center"> Tipo de
-                                    funionario</label>
+                                    funcionario</label>
                                 <div class="col-md-8 col-lg-9">
                                     <div class="form-check  pb-2">
                                         <input class="form-check-input" type="checkbox" id="changesMade"
