@@ -105,9 +105,10 @@ class FuncionarioController extends Controller
             $Registro_em_uso_motorista = DB::table('portaria')->where('fk_id_motorista', $id)->exists();
             $Registro_em_uso_supervisor = DB::table('portaria')->where('fk_id_supervisor', $id)->exists();
             $Registro_em_uso_supervisor_user = DB::table('users')->where('id_funcionario', $id)->exists();
+            $Registro_em_uso_ordem_servico = DB::table('ordem_servico')->where('id_funcionario', $id)->exists();
+            $Registro_em_uso_manutencao_preventiva = DB::table('manutencao_preventiva')->where('id_funcionario', $id)->exists();
 
             if ($Registro_em_uso_supervisor_user > 0) {
-
                 return redirect('/funcionario/listar')->with('ERRO', 'Registro não pode ser excluído por estar
              relacionado com os dados do usuarios');
             } else if ($Registro_em_uso_motorista > 0) {
@@ -116,9 +117,15 @@ class FuncionarioController extends Controller
             } else if ($Registro_em_uso_ajudante > 0) {
                 return redirect('/funcionario/listar')->with('ERRO', 'Registro não pode ser excluído por estar
             relacionado com os dados da portaria');
-            } else if ($Registro_em_uso_supervisor_user > 0) {
+            } else if ($Registro_em_uso_supervisor  > 0) {
                 return redirect('/funcionario/listar')->with('ERRO', 'Registro não pode ser excluído por estar
             relacionado com os dados da portaria');
+            } else if ($Registro_em_uso_ordem_servico > 0) {
+                return redirect('/funcionario/listar')->with('ERRO', 'Registro não pode ser excluído por estar
+            relacionado com os dados na Ordem de serviço');
+            } else if ($Registro_em_uso_manutencao_preventiva > 0) {
+                return redirect('/funcionario/listar')->with('ERRO', 'Registro não pode ser excluído por estar
+            relacionado com os dados da manutenção preventiva');
             } else {
                 if (Funcionario::findOrFail($id)->delete()) {
                     return redirect('/funcionario/listar')->with('msg', 'Funcionario excluido com sucesso');
@@ -326,9 +333,9 @@ class FuncionarioController extends Controller
             'pefil'  => $perfil,
             'id_funcionario' => $id
         ];
- 
-       // dd($TotalDeSaidas);
-        
+
+        // dd($TotalDeSaidas);
+
         return view('funionarios.perfil', $dados);
     }
 

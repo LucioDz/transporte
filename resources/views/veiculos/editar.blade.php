@@ -53,8 +53,13 @@
                                                 Perfil</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     @if ($veiculo->imagem != null)
+                                                        <img src=" {{ asset('storage/'. $veiculo->imagem) }}"
+                                                            height="150px" alt="Profile" id="photo_ferfil">
+
+                                                        {{-- 
                                                         <img src="{{Storage::disk('s3')->url($veiculo->imagem) }}"
                                                             height="150px" alt="Profile" id="photo_ferfil">
+                                                        --}}
                                                     @else
                                                     <img src="/img/veiculo.png" height="150px" alt="Profile"
                                                             id="photo_ferfil">

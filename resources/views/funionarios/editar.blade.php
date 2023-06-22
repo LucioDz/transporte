@@ -48,8 +48,14 @@
                                                 Perfil</label>
                                             <div class="col-md-8 col-lg-9">
                                                 @if ( $funcionario->imagem != null)
+                                           
+                                                <img src=" {{ asset('storage/' . $funcionario->imagem) }}" height="150px"
+                                                        alt="Profile" id="photo_ferfil">
+
+                                                      {{-- 
                                                     <img src="{{Storage::disk('s3')->url($funcionario->imagem) }}" height="150px"
                                                         alt="Profile" id="photo_ferfil">
+                                                        --}}
                                                 @else
                                                     <img src="/img/perfilsemfoto.jpg" height="150px" alt="Profile"
                                                         id="photo_ferfil">

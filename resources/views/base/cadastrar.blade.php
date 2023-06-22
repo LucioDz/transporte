@@ -23,9 +23,7 @@
     <div class="container p-5">
 
 
-
         <section class="section profile">
-
 
             <div class="row">
 
