@@ -22,7 +22,6 @@ function mostrar_incluir_servico2() {
     minhaModal.show();
 }
 
-
 // seleçao de elementos
 const Formulario = document.querySelector("#form_servico")
 const AlertaMensagem = document.querySelector("#AlertaMensagem")
@@ -31,7 +30,6 @@ const nome_servico = document.querySelector("#nome_servico")
 const descricao_servico = document.querySelector("#descricao")
 
 // metodo para salvarDados
-
 const  saveDados = (nome,descricao) => {
     
     const tr = document.createElement("tr")
@@ -51,7 +49,7 @@ const  saveDados = (nome,descricao) => {
       nome_servico.value = ""
       descricao_servico.value = ""
       nome_servico.focus()
-    
+
 }
 
 Formulario.addEventListener('submit',(evento) => {
@@ -117,7 +115,6 @@ criarPost({owner:'beto',content:'segundo post'})
 
 function updateContentPost(id,novoConteudo){
 
-    // ep
   const PostQueseraActulizado  = pegarPosts().find((post) => {
         return post.id === id
   })

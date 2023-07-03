@@ -1,9 +1,8 @@
 /// codigo para o o formulario editar
-
 if (document.querySelector('.formulario')) {
 
     const Formulario = document.querySelector('.formulario');
-    
+
     Formulario.addEventListener('submit', async (evento) => {
         const botaoEnvioPortaria = document.querySelector('.botaoformulario').disabled = true;
     })
@@ -29,6 +28,7 @@ const descricao_servico = document.querySelector("#descricao")
 const listaPost = document.querySelector(".listaPost")
 
 
+
 const $servicos_requesitados = {
 
     servicos: [{ id: 1, nome: '', descricao: '' }]
@@ -36,6 +36,8 @@ const $servicos_requesitados = {
 }
 
 // Para exibir a mensagem "Nenhum serviço adicionado" usando o alert do Bootstrap
+//, você pode usar o seguinte código JavaScript:
+
 if (document.querySelector('#corpo_tabela')) {
     const tableBody = document.querySelector('#corpo_tabela');
 
@@ -49,7 +51,8 @@ if (document.querySelector('#corpo_tabela')) {
     }
 
 }
-/*********************************  Metodo para salvarDados no array ***********************/
+/*********************************  Metodo para salvarDados ***********************/
+
 if (document.querySelector("#form_servico")) {
 
     const Formulario = document.querySelector("#form_servico")
@@ -141,7 +144,7 @@ function AdicionarServico(dados) {
     const tr = document.createElement("tr")
     const linhasDaTabela = document.querySelectorAll('tr[data-id]') + 1;
 
-    //removendo a informacao se Nenhum serviço adicionado
+    //removendo a informacao Nenhum serviço adicionado
     if (linhasDaTabela.length > 0 && document.querySelector(".Semservico")) {
         divSemServico = document.querySelector(".Semservico").remove();
     }
@@ -149,7 +152,7 @@ function AdicionarServico(dados) {
     tr.innerHTML =
         '<tr>' +
         '<td id="celula-nome">' + dados.nome + '</td>' +
-        '<td class="editar" id="celula-descricao" contenteditable>' + dados.descricao + '</td>' +
+        '<td id="celula-descricao">' + dados.descricao + '</td>' +
         '<td class="col-acoes">' +
         '<div class="btn-group btn-group-sm" role="group" aria-label="Ações">' +
         '<button type="button" class="btn btn-primary editar mx-1"><i class="bi bi-pen-fill editar"></i></button>' +
@@ -158,7 +161,7 @@ function AdicionarServico(dados) {
         '</td>' +
         '</tr>'
 
-     tr.setAttribute('data-id',Id);
+    tr.setAttribute('data-id', Id);
     //adicionando linhas na tabela
     corpo_tabela.appendChild(tr)
 }
@@ -224,12 +227,13 @@ document.addEventListener('click', (evento) => {
     // este bloco sera exexutado quando o usuario clicar no botao editar
     if (elementosClicado.classList.contains('editar')) {
 
-        // console.log(elementosClicado);
+        console.log(elementosClicado);
 
         const linhasTabela = document.querySelectorAll('tr[data-id]');
-        
-         let idLinhaSelecionada;
 
+        let idLinhaSelecionada;
+
+        ///metodos para pegar os dados e inseir no modal
         linhasTabela.forEach((linha) => {
 
             const botaoEditar = linha.querySelector('.editar');
@@ -238,26 +242,45 @@ document.addEventListener('click', (evento) => {
 
                 idLinhaSelecionada = linha.getAttribute('data-id');
 
-                console.log(idLinhaSelecionada);
-
                 const descricao = linha.querySelector('#celula-descricao').innerText;
                 const nome = linha.querySelector('#celula-nome').innerText;
 
-            });
+                const formularioModal = document.querySelector('#formulario-actualizar');
 
+                formularioModal.querySelector('#descricao').value = descricao;
+                formularioModal.querySelector('#nome').value = nome;
+
+                const botaoFechar = formularioModal.querySelector('#fechar');
+                botaoFechar.addEventListener('click', () => {
+                    document.querySelector('.modal-backdrop').remove();
+                })
+                
+                mostrar_incluir_servico2()
+
+            });
         });
+
+        const formularioModal = document.querySelector('#formulario-actualizar');
+
+        // metodos para actualizar os dados
+        formularioModal.addEventListener('submit', (evento) => {
+
+            evento.preventDefault();
+
+            //pegando os valores da caixa de texto
+            const descricao = formularioModal.querySelector('#descricao').value;
+            const nome = formularioModal.querySelector('#nome').value;
+
             const linhaTabela = document.querySelector(`tr[data-id="${idLinhaSelecionada}"]`);
-           
-            console.log(linhaTabela);
-              /*
+
             const nomeConteudo = linhaTabela.querySelector('#celula-nome').innerText = nome;
             const descricaoConteudo = linhaTabela.querySelector('#celula-descricao').innerText = descricao;
-             */
-            const nomeConteudo = linhaTabela.querySelector('#celula-nome').innerText;
-            const descricaoConteudo = linhaTabela.querySelector('#celula-descricao').innerText;
 
             updateContentServico(idLinhaSelecionada, nomeConteudo, descricaoConteudo)
-       }
+
+        });
+
+    }
 })
 
 function pegarServicos() {
@@ -476,4 +499,3 @@ window.addEventListener('load', function () {
     //(a removendo a sessao)
     sessionStorage.removeItem('msg');
 });
-
